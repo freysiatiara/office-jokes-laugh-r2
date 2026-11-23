@@ -29,6 +29,10 @@ def main():
         os.makedirs(parent, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(line + "\n")
+    # Read back and confirm the file holds exactly the joke: a partial
+    # write must never pass silently, the gate counts every byte.
+    with open(path, "r", encoding="utf-8") as f:
+        assert f.read() == line + "\n", "entry.txt round-trip mismatch"
 
 
 if __name__ == "__main__":
